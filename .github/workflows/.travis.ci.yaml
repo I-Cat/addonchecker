@@ -1,0 +1,95 @@
+language: C++
+# Define the build matrix
+# Travis defaults to building on Ubuntu Precise when building on
+# Linux. We need Trusty in order to get up to date versions of
+# cmake and g++.
+CI:
+run: |
+enviroments: | 
+   - os: Ubuntu
+      dist: trusty
+      sudo: notrequired
+ osx_image: 14.04.6 LTS
+     compiler: gcc
+    - os: Ubuntu
+      dist: trusty
+      sudo: notrequired
+      compiler: clang
+    - os: osx
+      osx_image: xcode10.2
+    - os: Windows
+    - Windows_image: 1903
+
+#  global:
+#        -Make
+# KODI:
+#  include: |
+#      - os: linux
+#      dist: xenial
+#      sudo: notrequired
+#      compiler: gcc
+#    - os: linux
+#      dist: xenial
+#      sudo: notrequired
+#      compiler: clang
+#    - os: osx
+#      osx_image: xcode10.2
+# The addon source is automatically checked out in $TRAVIS_BUILD_DIR,
+# we'll put the Kodi source on the same level
+#
+
+before script: |
+  - cd ~/ D:/
+  - mk dir ~/.gitconfig
+  - git config [--global]
+    user: 
+    user user.name $Travis
+    user.email $Travis@namelessone.com
+    color:
+    color color.ui auto
+    github github.user $Travis
+    github.token $[token#]
+# - git config [--local]
+  - rm .git/index
+  - rm .github/index
+  - git init
+  - mk dir .git
+  - mk dir .github
+  - git add .git
+  - git add .github
+# - git add .
+  - cd $TRAVIS_BUILD_DIR/..
+  - git clone --branch KODI --https://github.com/I-Cat/mirros-xbmc.git
+  - git clone --branch master --depth=1 https://github.com/xbmc/xbmc.git
+  - git status
+  - git log
+  - git log --graph --pretty=oneline --abbrev-commit
+#? enter, enter, enter*1,000,000
+# - git check "locked repo reason"
+  - git blame < https://github.com/xbmc/xbmc.git >
+#  Find: <repo/file lock-reasion?> ^^
+  - git show <Team Kodi>
+  - git grep <*.*\/[^*]> [/]
+  - git checkout <Team Kodi> </>
+  - git branch
+  - git checkout --branch master --depth=1 https://github.com/xbmc/xbmc.git
+  - git merge --branch KODI 
+  - git format-patch https://github.com/I-Cat/mirros-xbmc
+  - git push [https://github.com/I-Cat/mirros-xbmc] [KODI]
+  - git tag <0.1_k>
+  - git commit -a
+# - git checkout <new> <branch>
+# <master>
+# - git merge
+# - git pull 
+  - cd D:/ ${trusty} && mkdir build && cd build
+  - mkdir -p definition/${trusty}
+  - echo ${xbmc} $TRAVIS_BUILD_DIR $TRAVIS_COMMIT > definition/${trusty}/${xbmc}.txt
+  - cmake -DADDONS_TO_BUILD=${trusty} -DADDON_SRC_PREFIX=$TRAVIS_BUILD_DIR/.. -DADDONS_DEFINITION_DIR=$TRAVIS_BUILD_DIR/build/definition -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=$TRAVIS_BUILD_DIR/../xbmc/ -DPACKAGE_ZIP=1 $TRAVIS_BUILD_DIR/../xbmc/cmake/addons
+
+after script: | 
+        make
+        make .zip
+        Build
+        fi
+        

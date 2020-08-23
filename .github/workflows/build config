@@ -1,0 +1,156 @@
+{
+  "os": "linux",
+  "env": {
+    "global": [
+      "MAKEFLAGS=-j4",
+      "CXXFLAGS=-Wno-invalid-offsetof"
+    ]
+  },
+  "git": {
+    "submodules": false
+  },
+  "dist": "trusty",
+  "sudo": false,
+  "cache": {
+    "apt": true,
+    "directories": [
+      "$HOME/cmake-3.3.2-Linux-x86_64/bin",
+      "$HOME/cmake-3.3.2-Linux-x86_64/share",
+      "$TRAVIS_BUILD_DIR/Submodules/CEF",
+      "$TRAVIS_BUILD_DIR/.git/modules/Submodules/CEF"
+    ]
+  },
+  "addons": {
+    "apt": {
+      "packages": [
+        "nodejs"
+      ]
+    }
+  },
+  "matrix": {
+    "exclude": [
+      {
+        "env": "CMAKE_TOOLCHAIN_FILE=Build/CMake/Toolchains/MinGW.cmake CMAKE_SYSTEM_PROCESSOR=x86_64 ATOMIC_D3D9=1",
+        "addons": {
+          "apt": {
+            "packages": [
+              [
+                "nodejs"
+              ],
+              "gcc-mingw-w64-x86-64",
+              "g++-mingw-w64-x86-64",
+              "binutils-mingw-w64-x86-64"
+            ]
+          }
+        },
+        "before_script": "ln -s /usr/$CMAKE_SYSTEM_PROCESSOR-w64-mingw32/include/windows.h Windows.h\nln -s /usr/$CMAKE_SYSTEM_PROCESSOR-w64-mingw32/include/shobjidl.h ShObjIdl.h\nln -s /usr/$CMAKE_SYSTEM_PROCESSOR-w64-mingw32/include/strsafe.h Strsafe.h\nln -s /usr/$CMAKE_SYSTEM_PROCESSOR-w64-mingw32/include/psapi.h Psapi.h\nln -s /usr/$CMAKE_SYSTEM_PROCESSOR-w64-mingw32/include/sddl.h Sddl.h\nln -s /usr/$CMAKE_SYSTEM_PROCESSOR-w64-mingw32/include/accctrl.h AccCtrl.h\nln -s /usr/$CMAKE_SYSTEM_PROCESSOR-w64-mingw32/include/aclapi.h Aclapi.h\nln -s /usr/$CMAKE_SYSTEM_PROCESSOR-w64-mingw32/include/oleidl.h OleIdl.h\nln -s /usr/$CMAKE_SYSTEM_PROCESSOR-w64-mingw32/lib/libws2_32.a libWs2_32.a\nln -s /usr/$CMAKE_SYSTEM_PROCESSOR-w64-mingw32/lib/libiphlpapi.a libIphlpapi.a\nln -s /usr/$CMAKE_SYSTEM_PROCESSOR-w64-mingw32/lib/libwldap32.a libWldap32.a\nexport CFLAGS=\"-I`pwd` -L`pwd` $CFLAGS\"\nexport CXXFLAGS=\"-I`pwd` -L`pwd` $CXXFLAGS\"\n"
+      },
+      {
+        "env": "CMAKE_TOOLCHAIN_FILE=Build/CMake/Toolchains/MinGW.cmake CMAKE_SYSTEM_PROCESSOR=i686 ATOMIC_D3D9=1",
+        "addons": {
+          "apt": {
+            "packages": [
+              [
+                "nodejs"
+              ],
+              "gcc-mingw-w64-i686",
+              "g++-mingw-w64-i686",
+              "binutils-mingw-w64-i686"
+            ]
+          }
+        },
+        "before_script": "ln -s /usr/$CMAKE_SYSTEM_PROCESSOR-w64-mingw32/include/windows.h Windows.h\nln -s /usr/$CMAKE_SYSTEM_PROCESSOR-w64-mingw32/include/shobjidl.h ShObjIdl.h\nln -s /usr/$CMAKE_SYSTEM_PROCESSOR-w64-mingw32/include/strsafe.h Strsafe.h\nln -s /usr/$CMAKE_SYSTEM_PROCESSOR-w64-mingw32/include/psapi.h Psapi.h\nln -s /usr/$CMAKE_SYSTEM_PROCESSOR-w64-mingw32/include/sddl.h Sddl.h\nln -s /usr/$CMAKE_SYSTEM_PROCESSOR-w64-mingw32/include/accctrl.h AccCtrl.h\nln -s /usr/$CMAKE_SYSTEM_PROCESSOR-w64-mingw32/include/aclapi.h Aclapi.h\nln -s /usr/$CMAKE_SYSTEM_PROCESSOR-w64-mingw32/include/oleidl.h OleIdl.h\nln -s /usr/$CMAKE_SYSTEM_PROCESSOR-w64-mingw32/lib/libws2_32.a libWs2_32.a\nln -s /usr/$CMAKE_SYSTEM_PROCESSOR-w64-mingw32/lib/libiphlpapi.a libIphlpapi.a\nln -s /usr/$CMAKE_SYSTEM_PROCESSOR-w64-mingw32/lib/libwldap32.a libWldap32.a\nexport CFLAGS=\"-I`pwd` -L`pwd` $CFLAGS\"\nexport CXXFLAGS=\"-I`pwd` -L`pwd` $CXXFLAGS\"\n"
+      },
+      {
+        "env": "LINUX=1 ATOMIC_64BIT=0 CFLAGS=-m32 CXXFLAGS=-m32",
+        "addons": {
+          "apt": {
+            "packages": [
+              [
+                "nodejs"
+              ],
+              "g++-multilib",
+              "libasound2-dev:i386",
+              "libxrandr-dev:i386",
+              "libgl1-mesa-dev:i386",
+              "libglu1-mesa-dev:i386"
+            ]
+          }
+        }
+      },
+      {
+        "env": "LINUX=1 ATOMIC_64BIT=0 CFLAGS=-m32 CXXFLAGS=-m32",
+        "addons": {
+          "apt": {
+            "packages": [
+              [
+                "nodejs"
+              ],
+              "g++-multilib",
+              "libasound2-dev:i386",
+              "libxrandr-dev:i386",
+              "libgl1-mesa-dev:i386",
+              "libglu1-mesa-dev:i386"
+            ]
+          }
+        },
+        "compiler": "clang"
+      }
+    ],
+    "include": [
+      {
+        "env": "LINUX=1",
+        "addons": {
+          "apt": {
+            "packages": [
+              [
+                "nodejs"
+              ],
+              "libgtk-3-dev",
+              "libasound2-dev",
+              "libxrandr-dev",
+              "libgl1-mesa-dev",
+              "libglu1-mesa-dev"
+            ]
+          }
+        }
+      },
+      {
+        "env": "LINUX=1",
+        "addons": {
+          "apt": {
+            "packages": [
+              [
+                "nodejs"
+              ],
+              "libgtk-3-dev",
+              "libasound2-dev",
+              "libxrandr-dev",
+              "libgl1-mesa-dev",
+              "libglu1-mesa-dev"
+            ]
+          }
+        },
+        "compiler": "clang"
+      }
+    ],
+    "fast_finish": true
+  },
+  "script": "# Update CMake to 3.3 (minimum required version)\nif [[ ! -f $HOME/cmake-3.3.2-Linux-x86_64/bin/cmake ]];\nthen\n    wget --no-check-certificate https://cmake.org/files/v3.3/cmake-3.3.2-Linux-x86_64.tar.gz -O $HOME/cmake.tar.gz && \\\n    tar xf $HOME/cmake.tar.gz -C $HOME && \\\n    rm $HOME/cmake.tar.gz\nfi\nexport PATH=$HOME/cmake-3.3.2-Linux-x86_64/bin:$PATH\nmkdir build\ncd build\ncmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE} ..\ncmake --build .\n",
+  "compiler": "gcc",
+  "language": "cpp",
+  "notifications": {
+    "email": {
+      "on_failure": "always",
+      "on_success": "change"
+    },
+    "webhooks": {
+      "urls": [
+        "https://webhooks.gitter.im/e/0a3a6be99ffe14498019"
+      ],
+      "on_start": "always",
+      "on_failure": "always",
+      "on_success": "always"
+    }
+  }
+}

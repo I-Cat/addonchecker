@@ -1,0 +1,93 @@
+language: C++
+
+#
+# Define the build matrix
+#
+# Travis defaults to building on Ubuntu Precise when building on
+# Linux. We need Trusty in order to get up to date versions of
+# cmake and g++.
+#
+env: | 
+   - os: linux
+      dist: xenial
+      sudo: notrequired
+      compiler: gcc
+    - os: linux
+      dist: xenial
+      sudo: notrequired
+      compiler: clang
+    - os: osx
+      osx_image: xcode10.2
+   global:
+#        -TEST
+KODI:
+  include:
+      - os: linux
+        dist: xenial
+        sudo: notrequired
+        compiler: gcc
++os: linux
+dist: xenial
+sudo: notrequired
+compiler: clang
++ os: osx
+osx_image: xcode10.2
+# The addon source is automatically checked out in $TRAVIS_BUILD_DIR,
+# we'll put the Kodi source on the same level
+
+jobs: |
+    cd D:\
+    mk dir D:\Kodi
+    git config [--global]
+    user: {@name} 
+    user=name $Travis
+    user.email $Travis@namelessone.com
+    color: color.ui auto
+    @github=@github.user $Travis
+    @github.token $[tokens]
+    git config [--remote]
+    git init
+    mk .git/index
+    mk .github/index
+    mk dir .github
+    cd $TRAVIS_BUILD_DIR=D:\
+    git clone --all https://github.com/I-Cat/mirros-xbmc.git
+    git clone --all https://github.com/xbmc/xbmc.git
+    git status
+    git log
+    Cmd: keyboard key =[enter],[enter],[enter] 
+    git checkout --branch master --depth=1 https://github.com/xbmc/xbmc.git
+    git make --branch patch#1
+    git add patch#1
+    git -f push --branch patch#1
+    git push https://github.com/I-Cat/mirros-xbmc.git
+    git tag <0.1_k>
+    git commit -"patch#1"
+  - cd D:/ ${trusty} && mkdir build && cd build
+  - mkdir -p definition/${trusty}
+  - echo ${xbmc} $TRAVIS_BUILD_DIR $TRAVIS_COMMIT > definition/${trusty}/${xbmc}.txt
+  - cmake -DADDONS_TO_BUILD=${trusty} -DADDON_SRC_PREFIX=$TRAVIS_BUILD_DIR/.. -DADDONS_DEFINITION_DIR=$TRAVIS_BUILD_DIR/build/definition -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=$TRAVIS_BUILD_DIR/../xbmc/ -DPACKAGE_ZIP=1 $TRAVIS_BUILD_DIR/../xbmc/cmake/addons
+
+scripts: | 
+        Build
+        make
+        make 1.zip
+        fi
+        
+#   git merge --branch KODI 
+# https://github.com/I-Cat/mirros-xbmc
+# *1,000,000
+#   git log --graph --pretty=oneline --abbrev-commit
+#   git add .github
+#   git add --all
+#   git check "locked repo reason"
+#   git blame < https://github.com/xbmc/xbmc.git >
+#  Find: <repo/file lock-reasion?> ^^
+#   git show <Team Kodi>
+#   git grep <*.*\/[^*]> [/]
+#   git checkout <Team Kodi> </>
+#   git branch
+# - git checkout <new> <branch>
+# <master>
+# - git merge
+# - git pull 
